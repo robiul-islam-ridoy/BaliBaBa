@@ -12,10 +12,12 @@ import {
 import {
   getAuth,
   signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { firebaseConfig } from "./config.js";
+import { getFirebaseConfig } from "./config.js";
 
 // Initialize Firebase
+const firebaseConfig = await getFirebaseConfig();
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
@@ -31,6 +33,14 @@ const checkoutBtn = document.getElementById("checkoutBtn");
 const addProductForm = document.getElementById("addProductForm");
 const searchInput = document.getElementById("searchInput");
 const logoutBtn = document.getElementById("logoutBtn");
+
+
+// Redirect if not logged in
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "/";
+  }
+});
 
 // Toast helpers
 function showToast(id, message) {

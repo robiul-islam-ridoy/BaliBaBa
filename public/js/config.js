@@ -1,3 +1,9 @@
+export async function getFirebaseConfig() {
+  const res = await fetch('/config');
+  if (!res.ok) throw new Error('Failed to load Firebase config');
+  return await res.json();
+}
+
 // export const firebaseConfig = {
 //   apiKey: process.env.FIREBASE_API_KEY,
 //   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
